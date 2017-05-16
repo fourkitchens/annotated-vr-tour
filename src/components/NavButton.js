@@ -46,7 +46,7 @@ class NavButton extends React.Component {
     rotateY: 0,
     scaleFactor: 1.3,
     textLabel: '',
-    translateZ: 0,
+    translate: [0, 0, -3],
   };
 
   static contextTypes = {
@@ -109,7 +109,7 @@ class NavButton extends React.Component {
           position: 'absolute',
           transform: [
             {rotateY: this.props.rotateY},
-            {translateZ: this.props.translateZ},
+            {translate: this.props.translate},
           ],
         }}
         onClick={() => this._selected()}

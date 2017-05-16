@@ -43,7 +43,7 @@ import Redirect from 'react-router/Redirect';
 class TourSample extends React.Component {
 
   static defaultProps = {
-    tourSource: 'tourOfTheChester.json',
+    tourSource: 'tourOf4K.json',
   };
 
   constructor(props) {
@@ -71,7 +71,7 @@ class TourSample extends React.Component {
     // Initialize the tour based on data file.
     this.setState({
       data: tourConfig,
-      locationId: null,
+      locationId: tourConfig.firstPhotoId,
       rotation: tourConfig.firstPhotoRotation +
         (tourConfig.photos[tourConfig.firstPhotoId].rotationOffset || 0),
     });
@@ -150,7 +150,6 @@ class TourSample extends React.Component {
                         rotateY={tooltip.rotationY}
                         source={asset('info_icon.png')}
                         tooltip={tooltip}
-                        translateZ={this.translateZ}
                       />
                     );
                   }
@@ -165,7 +164,7 @@ class TourSample extends React.Component {
                       rotateY={tooltip.rotationY}
                       source={asset(this.state.data.nav_icon)}
                       textLabel={tooltip.text}
-                      translateZ={this.translateZ}
+                      translate={tooltip.translate}
                     />
                   );
                 })}

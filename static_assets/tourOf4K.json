@@ -1,0 +1,47 @@
+{
+   "nav_icon": "chester_icon.png",
+   "firstPhotoId":"123456",
+   "firstPhotoRotation":150,
+   "soundEffects": {
+      "navButton": {
+         "onEnter": {
+            "uri": "switch-flip.wav",
+            "attributionUri": "https://www.freesound.org/people/ianstargem/sounds/278205/"
+         },
+         "onClick": {
+            "uri": "menu-click.wav",
+            "attributionUri": "https://www.freesound.org/people/fins/sounds/146721/"
+         }
+      },
+      "infoButton": {
+         "onEnter": {
+            "uri": "switch-flip.wav",
+            "attributionUri": "https://www.freesound.org/people/ianstargem/sounds/278205/"
+         }
+      },
+      "ambient": {
+         "uri": "cafe.wav",
+         "attributionUri": "https://www.freesound.org/people/PapercutterJohn/sounds/322031/",
+         "loop": true,
+         "volume": 0.50
+      }
+   },
+   "photos":{
+      "123456":{
+         "rotationOffset": -60,
+         "uri":"images/scenes/mike-office.jpg",
+         "tooltips":[
+            {
+               "type": "panelimage",
+               "width": 2,
+               "height": 2,
+               "rotationY": -90,
+               "translate": [0.04, 0.70, -3],
+               "source": "images/png/mike-sash.png",
+               "title": "Wear All The Hats",
+               "text": "He wears a lot of hats in life, too. For his wedding, he wore this Zupan -- a traditional Polish hat + cloak garment."
+            }
+         ]
+      }
+   }
+}

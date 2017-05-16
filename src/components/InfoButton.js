@@ -36,7 +36,7 @@ class InfoButton extends React.Component {
     height: 0.3,
     onInput: null,
     rotateY: 0,
-    translateZ: 0,
+    translate: [0, 0, 0],
     width: 0.3,
   };
 
@@ -74,11 +74,10 @@ class InfoButton extends React.Component {
     return (
       <VrButton
         style={{
-          layoutOrigin: [0.5, 0.5, 0],
           position: 'absolute',
           transform: [
             {rotateY: this.props.rotateY},
-            {translateZ: this.props.translateZ},
+            {translate: this.props.tooltip.translate},
           ],
         }}
         onInput={this.props.onInput}
@@ -103,10 +102,10 @@ class InfoButton extends React.Component {
         >
         <Animated.View
           style={{
+            flex: 1,
             flexDirection: 'row',
             alignItems: 'center',
             opacity: this.state.opacityAnim, 
-            paddingLeft: 0.4,
           }}
           billboarding={'on'}
         >

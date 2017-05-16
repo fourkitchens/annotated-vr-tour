@@ -28,6 +28,14 @@ import {
  * and renders either an image, image with text overlay, or text block.
  */
 class Tooltip extends React.Component {
+  static fontSize = {
+    attrib: 0.05,
+    text: 0.11,
+    title: 0.17,
+  }
+  static margin = 0.05
+  static rotateXFactor = 11
+  static adjustTooltipY = 0.7
 
   constructor(props) {
     super();
@@ -43,12 +51,15 @@ class Tooltip extends React.Component {
     };
 
     return(
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          alignItems: 'center',
+        }} >
       <Image
         style={{
-          borderColor: '#777879',
-          borderWidth: 0.01,
           height: props.tooltip.height,
-          justifyContent: 'flex-end',
           width: props.tooltip.width,
         }}
         source={asset(props.tooltip.source)}
@@ -56,7 +67,7 @@ class Tooltip extends React.Component {
       {props.tooltip.attribution && 
         <Text
           style={{
-            fontSize: fontSize.attrib,
+            fontSize: Tooltip.fontSize.attrib,
             right: 0.02,
             textAlign: 'right',
             textAlignVertical: 'bottom',
@@ -66,6 +77,7 @@ class Tooltip extends React.Component {
         </Text>
       }
       </Image>
+    </View>
     );
   }
 
@@ -85,75 +97,58 @@ class Tooltip extends React.Component {
   }
 
   PanelImageTooltip(props) {
-
-    const fontSize = {
-      attrib: 0.05,
-      text: 0.1,
-      title: 0.15,
-    };
-    const margin = 0.05;
-    const titleOpacity = 0.60;
-
     return(
       <View
         style={{
-          borderColor: '#777879',
-          borderWidth: 0.01,
+          flex: 1,
+          flexDirection: 'column',
+          alignItems: 'center',
+          position: 'relative',
+          transform: [
+            { rotateX: props.tooltip.translate[1] * Tooltip.rotateXFactor},
+            { translateY: Tooltip.adjustTooltipY },
+          ],
         }}
       >
         <Image
           style={{
             height: props.tooltip.height,
             width: props.tooltip.width,
-            justifyContent: 'flex-end',
+            transform: [{ translateZ: 0.1 }]
           }}
-          source={asset(props.tooltip.source)}>
-
-          {props.tooltip.title && 
-            <View>
-              <View
-                style={{
-                  backgroundColor: 'black',
-                  // Lower this transparent view so it appears behind the title.
-                  bottom: -fontSize.title - margin,
-                  height: fontSize.title + margin,
-                  opacity: titleOpacity,
-                  position: 'relative',
-                }}
-              />
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: fontSize.title,
-                  flex: 1,
-                  height: fontSize.title + margin,
-                  marginLeft: margin,
-                  marginRight: margin,
-                  textAlignVertical: 'bottom',
-                }}
-              >
-                {props.tooltip.title}
-              </Text>
-            </View>
-          }
-        </Image>
+          source={asset(props.tooltip.source)} />
 
         <View
           style={{
-            backgroundColor: 'black',
+            backgroundColor: '#127218',
             // Place attribution in bottom margin.
-            paddingBottom: props.tooltip.attribution ? 0 : margin,
-            paddingLeft: margin,
-            paddingRight: margin,
-            paddingTop: 0,
-            width: props.tooltip.width,
+            paddingBottom: .2,
+            paddingLeft: .2,
+            paddingRight: .2,
+            paddingTop: 1.1,
+            width: props.tooltip.width * 1.3,
+            height: props.tooltip.height,
+            position: 'absolute',
+            top: 1
           }}
         >
+          {props.tooltip.title && 
+            <Text
+              style={{
+                color: 'white',
+                fontSize: Tooltip.fontSize.title,
+                textAlignVertical: 'bottom',
+                marginBottom: Tooltip.margin
+              }}
+            >
+              {props.tooltip.title}
+            </Text>
+          }
           <Text
             style={{
               color: 'white',
-              fontSize: fontSize.text,
-              textAlignVertical: 'center',
+              fontSize: Tooltip.fontSize.text,
+              textAlignVertical: 'bottom',
             }}
           >
             {props.tooltip.text}
@@ -161,8 +156,8 @@ class Tooltip extends React.Component {
           {props.tooltip.attribution && 
             <Text
               style={{
-                fontSize: fontSize.attrib,
-                right: -margin + 0.02,
+                fontSize: Tooltip.fontSize.attrib,
+                right: -Tooltip.margin + 0.02,
                 textAlign: 'right',
               }}
             >
@@ -185,33 +180,25 @@ class Tooltip extends React.Component {
     return(
       <View
         style={{
-          backgroundColor: 'black',
+          backgroundColor: '#127218',
           padding: 0.1,
         }}
       >
         <Text
           style={{
             color: 'white',
-            fontSize: fontSize.title,
+            fontSize: Tooltip.fontSize.title,
             width: props.tooltip.width,
+            textAlignVertical: 'bottom',
+            marginBottom: Tooltip.margin
           }}
         >
           {props.tooltip.title}
         </Text>
-        {props.tooltip.title &&
-          <View
-            style={{
-              // If we have a title, make thin line to separate title and text.
-              backgroundColor: '#777879',
-              height: 0.01, 
-              width: props.tooltip.width,
-            }}
-          />
-        }
         <Text
           style={{
             color: 'white',
-            fontSize: fontSize.text,
+            fontSize: Tooltip.fontSize.text,
             width: props.tooltip.width,
           }}
         >
@@ -220,7 +207,7 @@ class Tooltip extends React.Component {
         {props.tooltip.attribution && 
           <Text
             style={{
-              fontSize: fontSize.attrib,
+              fontSize: Tooltip.fontSize.attrib,
               right: 0.02,
               textAlign: 'right',
             }}
