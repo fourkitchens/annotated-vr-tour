@@ -8,7 +8,7 @@
     "open": "node -e \"require('xopen')('http://localhost:8081/vr/')\"",
     "devtools": "react-devtools",
     "test": "jest",
-    "predeploy": "npm run bundle",
+    "predeploy": "npm run bundle && cp -rf static_assets vr/build",
     "deploy": "gh-pages -d vr/build"
   },
   "dependencies": {
