@@ -33,6 +33,17 @@ import LoadingSpinner from './src/components/LoadingSpinner';
 import Router from 'react-router/MemoryRouter';
 import Route from 'react-router/Route';
 import Redirect from 'react-router/Redirect';
+import Waterwheel from 'waterwheel';
+import relate from 'jsonapi-relate';
+
+const config = {
+  baseUrl: 'http://dev-vr-editor.pantheonsite.io'
+}
+
+const waterwheel = new Waterwheel({
+  base: 'http://dev-vr-editor.pantheonsite.io',
+  accessCheck: false
+})
 
 /**
  * ReactVR component that allows a simple tour using linked 360 photos.
@@ -41,11 +52,6 @@ import Redirect from 'react-router/Redirect';
  * text and/or images. Tooltip data and photo URLs are read from a JSON file.
  */
 class TourSample extends React.Component {
-
-  static defaultProps = {
-    tourSource: 'tourOf4K.json',
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -53,18 +59,88 @@ class TourSample extends React.Component {
       locationId: null,
       rotation: null,
     };
-
     // Set back UI elements from the camera (which is positioned at origin).
     this.translateZ = -3;
   }
 
   componentDidMount() {
-    fetch(asset(this.props.tourSource).uri)
-      .then((response) => response.json())
+    waterwheel.jsonapi.get('node/experience', {
+      include: [
+        'field_ambient',
+        'field_button_onclick_sound',
+        'field_button_onenter_sound',
+        'field_ambient',
+        'field_scenes',
+        'field_initial_scene',
+        'field_scenes.field_components',
+        'field_scenes.field_components.field_image',
+        'field_scenes.field_photosphere'
+      ].join(','),
+    })
       .then((responseData) => {
-        this.init(responseData);
+        const experience = this.normalizeExperience(responseData);
+        this.init(experience);
       })
       .done();
+  }
+
+  normalizeExperience(data) {
+    const experience = data.data[0];
+    const onEnter = relate.getRelationship(data, experience, 'field_button_onenter_sound');
+    const onClick = relate.getRelationship(data, experience, 'field_button_onclick_sound');
+    const ambientSound = relate.getRelationship(data, experience, 'field_ambient');
+    const initialScene = relate.getRelationship(data, experience, 'field_initial_scene');
+    const scenes = relate.getRelationship(data, experience, 'field_scenes');
+    return {
+      nav_icon: 'chester_icon.png',
+      firstPhotoId: initialScene.attributes.field_slug,
+      firstPhotoRotation: 150,
+      soundEffects: {
+        "navButton": {
+           "onEnter": {
+              "uri": `${config.baseUrl}${onEnter.attributes.url}`,
+              "attributionUri": "https://www.freesound.org/people/ianstargem/sounds/278205/"
+           },
+           "onClick": {
+              "uri": `${config.baseUrl}${onClick.attributes.url}`,
+              "attributionUri": "https://www.freesound.org/people/fins/sounds/146721/"
+           }
+        },
+        "infoButton": {
+           "onEnter": {
+              "uri": `${config.baseUrl}${onEnter.attributes.url}`,
+              "attributionUri": "https://www.freesound.org/people/ianstargem/sounds/278205/"
+           }
+        },
+        ambient: {
+          uri: `${config.baseUrl}${ambientSound.attributes.url}`,
+          volume: 0.50
+        }
+      },
+      photos: scenes.reduce((acc, scene) => {
+        const sceneImage = relate.getRelationship(data, scene, 'field_photosphere');
+        const components = relate.getRelationship(data, scene, 'field_components');
+        acc[scene.attributes.field_slug] = {
+          rotationOffset: -60,
+          uri: `${config.baseUrl}${sceneImage.attributes.url}`,
+          tooltips: components.map(component => ({
+            type: 'panelimage',
+            width: 2,
+            height: 2,
+            rotationY: -90,
+            translate: [
+              component.attributes.field_x,
+              component.attributes.field_y,
+              component.attributes.field_z,
+            ],
+            title: component.attributes.title,
+            source: `${config.baseUrl}${relate.getRelationship(data, component, 'field_image').attributes.url}`,
+            text: component.attributes.field_body,
+          }))
+        };
+        return acc;
+      }, {}),
+    }
   }
 
   init(tourConfig) {
@@ -117,7 +193,7 @@ class TourSample extends React.Component {
                 {ambient &&
                 <Sound 
                   // Background audio that plays throughout the tour.
-                  source={asset(ambient.uri)}
+                  source={{ uri: ambient.uri }}
                   autoPlay={true}
                   loop={ambient.loop}
                   volume={ambient.volume}
@@ -136,7 +212,7 @@ class TourSample extends React.Component {
                       locationId: params.id,
                     });
                   }}
-                  source={asset(this.state.data.photos[params.id].uri)}
+                  source={{ uri: this.state.data.photos[params.id].uri }}
                 />
                 {tooltips && tooltips.map((tooltip, index) => {
                   // Iterate through items related to this location, creating either
@@ -146,7 +222,7 @@ class TourSample extends React.Component {
                     return(
                       <InfoButton
                         key={index}
-                        onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
+                        onEnterSound={{ uri: soundEffects.infoButton.onEnter.uri }}
                         rotateY={tooltip.rotationY}
                         source={asset('info_icon.png')}
                         tooltip={tooltip}
@@ -157,8 +233,8 @@ class TourSample extends React.Component {
                     <NavButton
                       key={tooltip.linkedPhotoId}
                       isLoading={isLoading}
-                      onClickSound={asset(soundEffects.navButton.onClick.uri)}
-                      onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
+                      onClickSound={{ uri: soundEffects.navButton.onClick.uri }}
+                      onEnterSound={{ uri: soundEffects.navButton.onEnter.uri }}
                       to={`/${tooltip.linkedPhotoId}`}
                       history={history}
                       rotateY={tooltip.rotationY}

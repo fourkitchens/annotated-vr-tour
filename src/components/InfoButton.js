@@ -84,10 +84,10 @@ class InfoButton extends React.Component {
         onExit={() => {
           this._fadeOut();
         }}
-        onClickSound={this.props.onClickSound}
-        onEnterSound={this.props.onEnterSound}
+        onClickSound={{ uri: this.props.onClickSound }}
+        onEnterSound={{ uri: this.props.onEnterSound }}
         onExitSound={this.props.onExitSound}
-        onLongClickSound={this.props.onLongClickSound}
+        onLongClickSound={{ uri: this.props.onLongClickSound }}
       >
         <Image
           style={{

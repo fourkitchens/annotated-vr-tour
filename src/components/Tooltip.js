@@ -16,7 +16,6 @@
 
 import React from 'react';
 import {
-  asset,
   Image,
   Text,
   Video,
@@ -62,7 +61,7 @@ class Tooltip extends React.Component {
           height: props.tooltip.height,
           width: props.tooltip.width,
         }}
-        source={asset(props.tooltip.source)}
+        source={{ uri: props.tooltip.source }}
       >
       {props.tooltip.attribution && 
         <Text
@@ -89,7 +88,7 @@ class Tooltip extends React.Component {
           height: props.tooltip.height,
           width: props.tooltip.width,
         }}
-        source={asset(props.tooltip.source)}
+        source={{ uri: props.tooltip.source }}
         muted={props.tooltip.muted}
       >
       </Video>
@@ -105,7 +104,7 @@ class Tooltip extends React.Component {
           alignItems: 'center',
           position: 'relative',
           transform: [
-            { rotateX: props.tooltip.translate[1] * Tooltip.rotateXFactor},
+            { rotateX: props.tooltip.translate[1] * Tooltip.rotateXFactor },
             { translateY: Tooltip.adjustTooltipY },
           ],
         }}
@@ -116,7 +115,7 @@ class Tooltip extends React.Component {
             width: props.tooltip.width,
             transform: [{ translateZ: 0.1 }]
           }}
-          source={asset(props.tooltip.source)} />
+          source={{ uri: props.tooltip.source }} />
 
         <View
           style={{
