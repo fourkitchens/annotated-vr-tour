@@ -37,11 +37,11 @@ import Waterwheel from 'waterwheel';
 import relate from 'jsonapi-relate';
 
 const config = {
-  baseUrl: 'http://dev-vr-editor.pantheonsite.io'
+  baseUrl: 'https://dev-vr-editor.pantheonsite.io'
 }
 
 const waterwheel = new Waterwheel({
-  base: 'http://dev-vr-editor.pantheonsite.io',
+  base: config.baseUrl,
   accessCheck: false
 })
 
@@ -99,17 +99,14 @@ class TourSample extends React.Component {
         "navButton": {
            "onEnter": {
               "uri": `${config.baseUrl}${onEnter.attributes.url}`,
-              "attributionUri": "https://www.freesound.org/people/ianstargem/sounds/278205/"
            },
            "onClick": {
               "uri": `${config.baseUrl}${onClick.attributes.url}`,
-              "attributionUri": "https://www.freesound.org/people/fins/sounds/146721/"
            }
         },
         "infoButton": {
            "onEnter": {
               "uri": `${config.baseUrl}${onEnter.attributes.url}`,
-              "attributionUri": "https://www.freesound.org/people/ianstargem/sounds/278205/"
            }
         },
         ambient: {
