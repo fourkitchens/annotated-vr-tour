@@ -15,12 +15,7 @@
 'use strict';
 
 import React from 'react';
-import {
-  Image,
-  Text,
-  Video,
-  View,
-} from 'react-vr';
+import { Image, Text, Video, View } from 'react-vr';
 
 /**
  * Tooltip encapsulates the different tooltip types used with the InfoButton
@@ -31,10 +26,10 @@ class Tooltip extends React.Component {
     attrib: 0.05,
     text: 0.11,
     title: 0.17,
-  }
-  static margin = 0.05
-  static rotateXFactor = 11
-  static adjustTooltipY = 0.7
+  };
+  static margin = 0.05;
+  static rotateXFactor = 11;
+  static adjustTooltipY = 0.7;
 
   constructor(props) {
     super();
@@ -44,45 +39,43 @@ class Tooltip extends React.Component {
   // Stateless components can use this syntax instead of extending React.Component
 
   ImageTooltip(props) {
-
     const fontSize = {
       attrib: 0.05,
     };
 
-    return(
+    return (
       <View
         style={{
           flex: 1,
           flexDirection: 'column',
           alignItems: 'center',
-        }} >
-      <Image
-        style={{
-          height: props.tooltip.height,
-          width: props.tooltip.width,
         }}
-        source={{ uri: props.tooltip.source }}
       >
-      {props.tooltip.attribution && 
-        <Text
+        <Image
           style={{
-            fontSize: Tooltip.fontSize.attrib,
-            right: 0.02,
-            textAlign: 'right',
-            textAlignVertical: 'bottom',
+            height: props.tooltip.height,
+            width: props.tooltip.width,
           }}
+          source={{ uri: props.tooltip.source }}
         >
-          {props.tooltip.attribution}
-        </Text>
-      }
-      </Image>
-    </View>
+          {props.tooltip.attribution &&
+            <Text
+              style={{
+                fontSize: Tooltip.fontSize.attrib,
+                right: 0.02,
+                textAlign: 'right',
+                textAlignVertical: 'bottom',
+              }}
+            >
+              {props.tooltip.attribution}
+            </Text>}
+        </Image>
+      </View>
     );
   }
 
   VideoTooltip(props) {
-
-    return(
+    return (
       <Video
         style={{
           height: props.tooltip.height,
@@ -90,13 +83,12 @@ class Tooltip extends React.Component {
         }}
         source={{ uri: props.tooltip.source }}
         muted={props.tooltip.muted}
-      >
-      </Video>
+      />
     );
   }
 
   PanelImageTooltip(props) {
-    return(
+    return (
       <View
         style={{
           flex: 1,
@@ -113,36 +105,36 @@ class Tooltip extends React.Component {
           style={{
             height: props.tooltip.height,
             width: props.tooltip.width,
-            transform: [{ translateZ: 0.1 }]
+            transform: [{ translateZ: 0.1 }],
           }}
-          source={{ uri: props.tooltip.source }} />
+          source={{ uri: props.tooltip.source }}
+        />
 
         <View
           style={{
             backgroundColor: '#127218',
             // Place attribution in bottom margin.
-            paddingBottom: .2,
-            paddingLeft: .2,
-            paddingRight: .2,
+            paddingBottom: 0.2,
+            paddingLeft: 0.2,
+            paddingRight: 0.2,
             paddingTop: 1.1,
             width: props.tooltip.width * 1.3,
             height: props.tooltip.height,
             position: 'absolute',
-            top: 1
+            top: 1,
           }}
         >
-          {props.tooltip.title && 
+          {props.tooltip.title &&
             <Text
               style={{
                 color: 'white',
                 fontSize: Tooltip.fontSize.title,
                 textAlignVertical: 'bottom',
-                marginBottom: Tooltip.margin
+                marginBottom: Tooltip.margin,
               }}
             >
               {props.tooltip.title}
-            </Text>
-          }
+            </Text>}
           <Text
             style={{
               color: 'white',
@@ -152,7 +144,7 @@ class Tooltip extends React.Component {
           >
             {props.tooltip.text}
           </Text>
-          {props.tooltip.attribution && 
+          {props.tooltip.attribution &&
             <Text
               style={{
                 fontSize: Tooltip.fontSize.attrib,
@@ -161,22 +153,20 @@ class Tooltip extends React.Component {
               }}
             >
               {props.tooltip.attribution}
-            </Text>
-          }
+            </Text>}
         </View>
       </View>
     );
   }
 
   TextblockTooltip(props) {
-
     const fontSize = {
       attrib: 0.05,
       text: 0.1,
       title: 0.15,
     };
 
-    return(
+    return (
       <View
         style={{
           backgroundColor: '#127218',
@@ -189,7 +179,7 @@ class Tooltip extends React.Component {
             fontSize: Tooltip.fontSize.title,
             width: props.tooltip.width,
             textAlignVertical: 'bottom',
-            marginBottom: Tooltip.margin
+            marginBottom: Tooltip.margin,
           }}
         >
           {props.tooltip.title}
@@ -203,7 +193,7 @@ class Tooltip extends React.Component {
         >
           {props.tooltip.text}
         </Text>
-        {props.tooltip.attribution && 
+        {props.tooltip.attribution &&
           <Text
             style={{
               fontSize: Tooltip.fontSize.attrib,
@@ -212,28 +202,25 @@ class Tooltip extends React.Component {
             }}
           >
             {props.tooltip.attribution}
-          </Text>
-        }
+          </Text>}
       </View>
     );
   }
 
   render() {
-
-    switch(this.props.tooltip.type) {
+    switch (this.props.tooltip.type) {
       case 'image':
-        return(<this.ImageTooltip tooltip={this.props.tooltip} />);
+        return <this.ImageTooltip tooltip={this.props.tooltip} />;
       case 'video':
-        return(<this.VideoTooltip tooltip={this.props.tooltip} />);
+        return <this.VideoTooltip tooltip={this.props.tooltip} />;
       case 'panelimage':
-        return(<this.PanelImageTooltip tooltip={this.props.tooltip} />);
+        return <this.PanelImageTooltip tooltip={this.props.tooltip} />;
       case 'textblock':
-        return(<this.TextblockTooltip tooltip={this.props.tooltip} />);
+        return <this.TextblockTooltip tooltip={this.props.tooltip} />;
       default:
-        return(<Text style={{backgroundColor: 'red'}}>Missing Tooltip</Text>);
+        return <Text style={{ backgroundColor: 'red' }}>Missing Tooltip</Text>;
     }
   }
-
 }
 
 module.exports = Tooltip;

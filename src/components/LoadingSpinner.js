@@ -15,12 +15,7 @@
 'use strict';
 
 import React from 'react';
-import {
-  Animated,
-  asset,
-  Image,
-  View,
-} from 'react-vr';
+import { Animated, asset, Image, View } from 'react-vr';
 
 // Import from React Native.
 const Easing = require('Easing');
@@ -30,7 +25,6 @@ const Easing = require('Easing');
  * which looks nice and prevents spinner from appearing when loading is quick.
  */
 class LoadingSpinner extends React.Component {
-
   static defaultProps = {
     delay: 500,
     height: 0.5,
@@ -47,46 +41,38 @@ class LoadingSpinner extends React.Component {
       rotationAnim: new Animated.Value(0),
       opacityAnim: new Animated.Value(0),
     };
-
   }
 
   _rotationAnimate() {
     this.state.rotationAnim.setValue(0);
-    Animated.timing(
-      this.state.rotationAnim,
-      {
-        duration: this.props.speed,
-        easing: Easing.linear,
-        toValue: -360,
-      }
-    ).start((status) => {
+    Animated.timing(this.state.rotationAnim, {
+      duration: this.props.speed,
+      easing: Easing.linear,
+      toValue: -360,
+    }).start(status => {
       status.finished && this._rotationAnimate();
     });
   }
 
   componentDidMount() {
-    Animated.timing(
-      this.state.opacityAnim,
-      {
-        delay: this.props.delay,
-        duration: this.props.speed,
-        easing: Easing.linear,
-        toValue: 1,
-      }
-    ).start();
+    Animated.timing(this.state.opacityAnim, {
+      delay: this.props.delay,
+      duration: this.props.speed,
+      easing: Easing.linear,
+      toValue: 1,
+    }).start();
     this._rotationAnimate();
   }
 
   render() {
-
     return (
       <Animated.View
         style={{
           opacity: this.state.opacityAnim,
           transform: [
-            {rotateY: this.props.rotateY},
-            {rotateZ: this.state.rotationAnim},
-            {translateZ: this.props.translateZ},
+            { rotateY: this.props.rotateY },
+            { rotateZ: this.state.rotationAnim },
+            { translateZ: this.props.translateZ },
           ],
         }}
       >
@@ -94,11 +80,9 @@ class LoadingSpinner extends React.Component {
           style={{
             height: this.props.height,
             width: this.props.width,
-
           }}
           source={this.props.source}
-        >
-        </Image>
+        />
       </Animated.View>
     );
   }

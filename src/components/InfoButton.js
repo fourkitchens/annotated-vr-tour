@@ -15,12 +15,7 @@
 'use strict';
 
 import React from 'react';
-import {
-  Animated,
-  Image,
-  View,
-  VrButton,
-} from 'react-vr';
+import { Animated, Image, View, VrButton } from 'react-vr';
 
 import Tooltip from './Tooltip';
 
@@ -29,7 +24,6 @@ import Tooltip from './Tooltip';
  * when the cursor leaves both the button and the Tooltip.
  */
 class InfoButton extends React.Component {
-
   static defaultProps = {
     fadeIn: 500,
     fadeOut: 500,
@@ -46,38 +40,30 @@ class InfoButton extends React.Component {
       hasFocus: false,
       opacityAnim: new Animated.Value(0),
     };
-
   }
 
   _fadeIn() {
-    Animated.timing(
-      this.state.opacityAnim,
-      {
-        toValue: 1,
-        duration: this.props.fadeIn,
-      }
-    ).start();
+    Animated.timing(this.state.opacityAnim, {
+      toValue: 1,
+      duration: this.props.fadeIn,
+    }).start();
   }
 
   _fadeOut() {
-    Animated.timing(
-      this.state.opacityAnim,
-      {
-        toValue: 0,
-        duration: this.props.fadeOut,
-      }
-    ).start();
+    Animated.timing(this.state.opacityAnim, {
+      toValue: 0,
+      duration: this.props.fadeOut,
+    }).start();
   }
 
   render() {
-
     return (
       <VrButton
         style={{
           position: 'absolute',
           transform: [
-            {rotateY: this.props.rotateY},
-            {translate: this.props.tooltip.translate},
+            { rotateY: this.props.rotateY },
+            { translate: this.props.tooltip.translate },
           ],
         }}
         onInput={this.props.onInput}
@@ -100,19 +86,17 @@ class InfoButton extends React.Component {
           }}
           source={this.props.source}
         >
-        <Animated.View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            opacity: this.state.opacityAnim, 
-          }}
-          billboarding={'on'}
-        >
-          <Tooltip 
-            tooltip={this.props.tooltip}
-          />
-        </Animated.View>
+          <Animated.View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              opacity: this.state.opacityAnim,
+            }}
+            billboarding={'on'}
+          >
+            <Tooltip tooltip={this.props.tooltip} />
+          </Animated.View>
         </Image>
       </VrButton>
     );

@@ -15,14 +15,8 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from "prop-types";
-import {
-  Animated,
-  Image,
-  Text,
-  View,
-  VrButton,
-} from 'react-vr';
+import PropTypes from 'prop-types';
+import { Animated, Image, Text, View, VrButton } from 'react-vr';
 
 import LoadingSpinner from './LoadingSpinner';
 
@@ -35,7 +29,6 @@ const VrSoundEffects = require('VrSoundEffects');
  * Once selected, the button disappears and a loading spinner takes its place.
  */
 class NavButton extends React.Component {
-
   static defaultProps = {
     delay: 2000,
     height: 0.3,
@@ -50,8 +43,8 @@ class NavButton extends React.Component {
   };
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
+    router: PropTypes.object.isRequired,
+  };
 
   constructor(props) {
     super();
@@ -63,7 +56,6 @@ class NavButton extends React.Component {
       hasFocus: false,
       lastTimeoutId: 0,
     };
-
   }
 
   componentWillUnmount() {
@@ -73,14 +65,11 @@ class NavButton extends React.Component {
   }
 
   _startFill() {
-    Animated.timing(
-      this.state.borderWidthAnim,
-      {
-        toValue: this.ringWidth / 2,
-        easing: Easing.linear,
-        duration: this.props.delay,
-      }
-    ).start();
+    Animated.timing(this.state.borderWidthAnim, {
+      toValue: this.ringWidth / 2,
+      easing: Easing.linear,
+      duration: this.props.delay,
+    }).start();
   }
 
   _removeFill() {
@@ -90,12 +79,11 @@ class NavButton extends React.Component {
 
   _selected() {
     // Disable focus once button is selected.
-    this.setState({hasFocus: false});
+    this.setState({ hasFocus: false });
     this.props.history.push(this.props.to);
   }
 
   render() {
-
     // Set alpha channel to zero for 'no color' to make a transparent view.
     const transparent = 'rgba(255, 255, 255, 0.0)';
     const fillColor = 'rgba(255, 255, 255, 0.8)';
@@ -108,14 +96,14 @@ class NavButton extends React.Component {
           layoutOrigin: [0.5, 0.5],
           position: 'absolute',
           transform: [
-            {rotateY: this.props.rotateY},
-            {translate: this.props.translate},
+            { rotateY: this.props.rotateY },
+            { translate: this.props.translate },
           ],
         }}
         onClick={() => this._selected()}
         onEnter={() => {
           if (!this.props.isLoading) {
-            this.setState({hasFocus: true});
+            this.setState({ hasFocus: true });
             // Remember id, so we can remove this timeout if cusor exits.
             const id = setTimeout(() => {
               // Play click sound on gaze timeout. Audio was loaded by VrButton.
@@ -127,7 +115,7 @@ class NavButton extends React.Component {
           }
         }}
         onExit={() => {
-          this.setState({hasFocus: false});
+          this.setState({ hasFocus: false });
           clearTimeout(this.state.lastTimeoutId);
           this.state.lastTimeoutId = 0;
           this._removeFill();
@@ -156,7 +144,9 @@ class NavButton extends React.Component {
                 style={{
                   // Make fill circle that appears on hover. Use animation to make
                   // rounded, trasparent boarder shrink and white circle grown.
-                  backgroundColor: this.state.hasFocus ? fillColor : transparent,
+                  backgroundColor: this.state.hasFocus
+                    ? fillColor
+                    : transparent,
                   borderColor: transparent,
                   borderRadius: this.props.outerWidth / 2,
                   borderWidth: this.state.borderWidthAnim,
@@ -173,13 +163,10 @@ class NavButton extends React.Component {
                 }}
                 source={this.props.source}
               />
-            </View>
-          }
-          {this.props.isLoading &&
-            <LoadingSpinner />
-          }
+            </View>}
+          {this.props.isLoading && <LoadingSpinner />}
         </View>
-        { this.state.hasFocus &&
+        {this.state.hasFocus &&
           <Text
             style={{
               backgroundColor: 'black',
@@ -192,10 +179,10 @@ class NavButton extends React.Component {
               left: this.props.outerWidth + 0.05,
               textAlign: 'center',
               textAlignVertical: 'auto',
-          }}>
+            }}
+          >
             {this.props.textLabel}
-          </Text>
-        }
+          </Text>}
       </VrButton>
     );
   }
