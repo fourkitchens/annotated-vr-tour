@@ -9,7 +9,14 @@
     "devtools": "react-devtools",
     "test": "jest",
     "predeploy": "npm run bundle && cp -rf static_assets vr/build",
+    "precommit": "lint-staged",
     "deploy": "gh-pages -d vr/build"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --trailing-comma --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "jsonapi-relate": "^2.0.0",
@@ -28,7 +35,9 @@
     "babel-jest": "^19.0.0",
     "babel-preset-react-native": "^1.9.1",
     "gh-pages": "^1.0.0",
+    "husky": "^0.13.3",
     "jest": "^19.0.2",
+    "lint-staged": "^3.4.2",
     "prettier": "^1.3.1",
     "react-devtools": "^2.1.3",
     "react-test-renderer": "~15.4.1",
