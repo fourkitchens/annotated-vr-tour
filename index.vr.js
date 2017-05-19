@@ -37,7 +37,8 @@ import Waterwheel from 'waterwheel';
 import relate from 'jsonapi-relate';
 
 const config = {
-  baseUrl: 'https://dev-vr-editor.pantheonsite.io'
+  baseUrl: 'https://dev-vr-editor.pantheonsite.io',
+  previewMode: true,
 }
 
 const waterwheel = new Waterwheel({
@@ -63,8 +64,8 @@ class TourSample extends React.Component {
     this.translateZ = -3;
   }
 
-  componentDidMount() {
-    waterwheel.jsonapi.get('node/experience', {
+  getInitialData() {
+    return waterwheel.jsonapi.get('node/experience', {
       include: [
         'field_ambient',
         'field_button_onclick_sound',
@@ -80,8 +81,16 @@ class TourSample extends React.Component {
       .then((responseData) => {
         const experience = this.normalizeExperience(responseData);
         this.init(experience);
-      })
-      .done();
+      });
+  }
+
+  componentDidMount() {
+    this.getInitialData()
+      .then(() => {
+        if (config.previewMode) {
+          setInterval(this.getInitialData.bind(this), 3000);
+        }
+      });
   }
 
   normalizeExperience(data) {
@@ -118,17 +127,17 @@ class TourSample extends React.Component {
         const sceneImage = relate.getRelationship(data, scene, 'field_photosphere');
         const components = relate.getRelationship(data, scene, 'field_components');
         acc[scene.attributes.field_slug] = {
-          rotationOffset: -60,
+          rotationOffset: scene.attributes.field_rotation_offset || 0,
           uri: `${config.baseUrl}${sceneImage.attributes.url}`,
           tooltips: components.map(component => ({
             type: 'panelimage',
             width: 2,
             height: 2,
-            rotationY: -90,
+            rotationY: component.attributes.field_rotation || 0,
             translate: [
-              component.attributes.field_x,
-              component.attributes.field_y,
-              component.attributes.field_z,
+              component.attributes.field_x || 0,
+              component.attributes.field_y || 0,
+              component.attributes.field_z || 0,
             ],
             title: component.attributes.title,
             source: `${config.baseUrl}${relate.getRelationship(data, component, 'field_image').attributes.url}`,
