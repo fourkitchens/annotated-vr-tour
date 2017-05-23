@@ -1,17 +1,3 @@
-/**
- * The examples provided by Oculus are for non-commercial testing and
- * evaluation purposes only.
- *
- * Oculus reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL
- * OCULUS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
- * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- */
 'use strict';
 
 import React from 'react';
@@ -24,7 +10,7 @@ const Easing = require('Easing');
  * Displays a spinning loading indicator. Fades in after a configurable delay,
  * which looks nice and prevents spinner from appearing when loading is quick.
  */
-class LoadingSpinner extends React.Component {
+export default class LoadingSpinner extends React.Component {
   static defaultProps = {
     delay: 500,
     height: 0.5,
@@ -35,13 +21,10 @@ class LoadingSpinner extends React.Component {
     width: 0.5,
   };
 
-  constructor(props) {
-    super();
-    this.state = {
-      rotationAnim: new Animated.Value(0),
-      opacityAnim: new Animated.Value(0),
-    };
-  }
+  state = {
+    rotationAnim: new Animated.Value(0),
+    opacityAnim: new Animated.Value(0),
+  };
 
   _rotationAnimate() {
     this.state.rotationAnim.setValue(0);
@@ -87,5 +70,3 @@ class LoadingSpinner extends React.Component {
     );
   }
 }
-
-module.exports = LoadingSpinner;

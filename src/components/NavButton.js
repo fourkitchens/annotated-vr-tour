@@ -28,7 +28,7 @@ const VrSoundEffects = require('VrSoundEffects');
  * On hover, a text label appears, and a fill-circle exapnds around the button.
  * Once selected, the button disappears and a loading spinner takes its place.
  */
-class NavButton extends React.Component {
+export default class NavButton extends React.Component {
   static defaultProps = {
     delay: 2000,
     height: 0.3,
@@ -46,16 +46,17 @@ class NavButton extends React.Component {
     router: PropTypes.object.isRequired,
   };
 
+  state = {
+    borderWidthAnim: new Animated.Value(this.initialBorderWidth),
+    hasFocus: false,
+    lastTimeoutId: 0,
+  };
+
   constructor(props) {
     super();
     this.initialBorderWidth = (props.outerWidth - props.innerWidth) / 2;
     this.layoutFactor = (props.innerWidth + this.initialBorderWidth) / 2;
     this.ringWidth = 0.025;
-    this.state = {
-      borderWidthAnim: new Animated.Value(this.initialBorderWidth),
-      hasFocus: false,
-      lastTimeoutId: 0,
-    };
   }
 
   componentWillUnmount() {
@@ -122,8 +123,6 @@ class NavButton extends React.Component {
         }}
         onClickSound={this.props.onClickSound}
         onEnterSound={this.props.onEnterSound}
-        onExitSound={this.props.onExitSound}
-        onLongClickSound={this.props.onLongClickSound}
       >
         <View
           style={{
@@ -187,5 +186,3 @@ class NavButton extends React.Component {
     );
   }
 }
-
-module.exports = NavButton;

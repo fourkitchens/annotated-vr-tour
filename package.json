@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "jsonapi-relate": "^2.0.0",
+    "lodash": "^4.17.4",
     "ovrui": "^1.1.0",
     "prop-types": "^15.5.9",
     "react": "~15.4.1",
