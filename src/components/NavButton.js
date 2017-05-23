@@ -157,6 +157,7 @@ export default class NavButton extends React.Component {
               />
               <Image
                 style={{
+                  borderRadius: 50,
                   height: this.props.innerWidth,
                   width: this.props.innerWidth,
                 }}
@@ -175,7 +176,7 @@ export default class NavButton extends React.Component {
               marginLeft: 0.05,
               marginTop: (this.props.outerWidth - this.props.innerWidth) / 2,
               padding: 0.1,
-              left: this.props.outerWidth + 0.05,
+              left: this.props.outerWidth + 0.6,
               textAlign: 'center',
               textAlignVertical: 'auto',
             }}

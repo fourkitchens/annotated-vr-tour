@@ -55,6 +55,8 @@ class TourSample extends Component {
           'field_ambient',
           'field_scenes',
           'field_initial_scene',
+          'field_info_button',
+          'field_navigation_button',
           'field_scenes.field_components',
           'field_scenes.field_components.field_scene_link',
           'field_scenes.field_components.field_image',
@@ -87,9 +89,20 @@ class TourSample extends Component {
       experience,
       'field_initial_scene'
     );
+    const navButtonIcon = relate.getRelationship(
+      data,
+      experience,
+      'field_navigation_button'
+    );
+    const infoButtonIcon = relate.getRelationship(
+      data,
+      experience,
+      'field_info_button'
+    );
     const scenes = relate.getRelationship(data, experience, 'field_scenes');
     return {
-      nav_icon: 'chester_icon.png',
+      nav_icon: `${config.baseUrl}${navButtonIcon.attributes.url}`,
+      info_icon: `${config.baseUrl}${infoButtonIcon.attributes.url}`,
       firstPhotoId: initialScene.attributes.field_slug,
       firstPhotoRotation: 150,
       soundEffects: {
@@ -262,7 +275,8 @@ class TourSample extends Component {
                               history={history}
                               translate={tooltip.translate}
                               rotateY={tooltip.rotationY}
-                              source={asset('images/jpg/steps.jpg')}
+                              source={{ uri: this.state.data.nav_icon }}
+                              textLabel={tooltip.title}
                             />
                           );
                         }
@@ -274,7 +288,7 @@ class TourSample extends Component {
                               uri: soundEffects.infoButton.onEnter.uri,
                             }}
                             rotateY={tooltip.rotationY}
-                            source={asset('info_icon.png')}
+                            source={{ uri: this.state.data.info_icon }}
                             content={tooltip}
                           />
                         );

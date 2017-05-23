@@ -81,6 +81,7 @@ const Hovertip = (WrappedComponent, onlySound = false) =>
         >
           <Image
             style={{
+              borderRadius: 50,
               height: 0.3,
               width: 0.3,
               flexDirection: 'row',
