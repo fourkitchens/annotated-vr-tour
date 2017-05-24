@@ -42,8 +42,8 @@ class TourSample extends Component {
   componentDidMount() {
     Linking.getInitialURL()
       .then(url => {
-        this.initialSceneSlug = qs.parse(url.split('?')[1]).placing;
-        console.log(this.initialSceneSlug);
+        this.initialSceneSlug = qs.parse(url.split('?')[1]).scene;
+        this.placing = Boolean(qs.parse(url.split('?')[1]).placing) || false;
       })
       .then(this.getInitialData)
       .then(this.init)
