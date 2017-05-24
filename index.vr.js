@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { AppRegistry, asset, Image, Pano, Text, Sound, View } from 'react-vr';
+const Linking = require('Linking');
 
 import _ from 'lodash';
 import Router from 'react-router/MemoryRouter';
@@ -9,6 +10,7 @@ import Route from 'react-router/Route';
 import Redirect from 'react-router/Redirect';
 import Waterwheel from 'waterwheel';
 import relate from 'jsonapi-relate';
+import qs from 'qs';
 
 import hovertipDictionary from './src/components/lib/HovertipDictionary';
 import NavButton from './src/components/NavButton';
@@ -38,11 +40,18 @@ class TourSample extends Component {
   };
 
   componentDidMount() {
-    this.getInitialData().then(this.init).then(() => {
-      if (config.previewMode) {
-        setInterval(this.getInitialData, 3000);
-      }
-    });
+    Linking.getInitialURL()
+      .then(url => {
+        this.initialSceneSlug = qs.parse(url.split('?')[1]).placing;
+        console.log(this.initialSceneSlug);
+      })
+      .then(this.getInitialData)
+      .then(this.init)
+      .then(() => {
+        if (config.previewMode) {
+          setInterval(this.getInitialData, 3000);
+        }
+      });
   }
 
   getInitialData = () => {
@@ -100,10 +109,12 @@ class TourSample extends Component {
       'field_info_button'
     );
     const scenes = relate.getRelationship(data, experience, 'field_scenes');
+    const firstPhotoId =
+      this.initialSceneSlug || initialScene.attributes.field_slug;
     return {
       nav_icon: `${config.baseUrl}${navButtonIcon.attributes.url}`,
       info_icon: `${config.baseUrl}${infoButtonIcon.attributes.url}`,
-      firstPhotoId: initialScene.attributes.field_slug,
+      firstPhotoId,
       firstPhotoRotation: 150,
       soundEffects: {
         navButton: {
