@@ -4097,6 +4097,10 @@ react-vr@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-vr/-/react-vr-1.1.0.tgz#b469fbfc01500e7bd940ffee467b4073c23f2504"
 
+"react-vr@https://github.com/facebook/react-vr#master":
+  version "1.0.0"
+  resolved "https://github.com/facebook/react-vr#4fc8f6aaccca8011bdc0ff154f066dbc26bd6313"
+
 react@~15.4.1:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"

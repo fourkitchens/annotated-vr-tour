@@ -316,4 +316,5 @@ class App extends Component {
 }
 
 AppRegistry.registerComponent('AnnotatedVRTour', () => App);
-module.exports = App;
+
+export default App;
