@@ -1,6 +1,6 @@
 {
   "name": "AnnotatedVRTour",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node -e \"console.log('open browser at http://localhost:8081/vr/\\n\\n');\" && node node_modules/react-native/local-cli/cli.js start",
@@ -19,6 +19,10 @@
       "prettier --single-quote --trailing-comma --write",
       "git add"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fourkitchens/annotated-vr-tour"
   },
   "release": {
     "analyzeCommits": "semantic-release-conventional-commits",
