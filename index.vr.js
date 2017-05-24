@@ -32,7 +32,7 @@ const waterwheel = new Waterwheel({
  * that move between tour locations and info buttons that display tooltips with
  * text and/or images. Tooltip data and photo URLs are read from a JSON file.
  */
-class TourSample extends Component {
+class App extends Component {
   state = {
     data: null,
     locationId: null,
@@ -315,5 +315,5 @@ class TourSample extends Component {
   }
 }
 
-AppRegistry.registerComponent('AnnotatedVRTour', () => TourSample);
-module.exports = TourSample;
+AppRegistry.registerComponent('AnnotatedVRTour', () => App);
+module.exports = App;
