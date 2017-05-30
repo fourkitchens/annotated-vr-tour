@@ -1,6 +1,7 @@
 import React from 'react';
 import { Video, View } from 'react-vr';
 import Hovertip from './lib/Hovertip';
+import Movable from './lib/Movable';
 
 export const AutoPlayVideo = ({ content, settings }) => {
   return (
@@ -21,4 +22,4 @@ export const AutoPlayVideo = ({ content, settings }) => {
   );
 };
 
-export default Hovertip(AutoPlayVideo);
+export default Movable(Hovertip(AutoPlayVideo));

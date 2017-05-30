@@ -8,14 +8,11 @@ import * as SimpleRaycaster from 'simple-raycaster';
 
 function init(bundle, parent, options) {
   const vr = new VRInstance(bundle, 'AnnotatedVRTour', parent, {
-    raycasters: [SimpleRaycaster],
+    // raycasters: [SimpleRaycaster],
     // Add custom options here
     cursorVisibility: 'visible',
     ...options,
   });
-  vr.render = function() {
-    // Any custom behavior you want to perform on each frame goes here
-  };
   // Begin the animation loop
   vr.start();
   return vr;

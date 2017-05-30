@@ -1,17 +1,3 @@
-/**
- * The examples provided by Oculus are for non-commercial testing and
- * evaluation purposes only.
- *
- * Oculus reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL
- * OCULUS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
- * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- */
 'use strict';
 
 import React, { Component } from 'react';
@@ -30,8 +16,10 @@ const Hovertip = (WrappedComponent, onlySound = false) =>
       height: 0.3,
       onInput: null,
       rotateY: 0,
+      rotateX: 0,
       translate: [0, 0, 0],
       width: 0.3,
+      enabled: true,
     };
 
     static fontSize = {
@@ -48,10 +36,12 @@ const Hovertip = (WrappedComponent, onlySound = false) =>
     };
 
     _fadeIn = () => {
-      Animated.timing(this.state.opacityAnim, {
-        toValue: 1,
-        duration: this.props.fadeIn,
-      }).start();
+      if (this.props.enabled) {
+        Animated.timing(this.state.opacityAnim, {
+          toValue: 1,
+          duration: this.props.fadeIn,
+        }).start();
+      }
     };
 
     _fadeOut = () => {
@@ -62,14 +52,24 @@ const Hovertip = (WrappedComponent, onlySound = false) =>
     };
 
     render() {
+      const transparent = 'rgba(255, 255, 255, 0.0)';
       return (
         <VrButton
           style={{
             position: 'absolute',
             transform: [
               { rotateY: this.props.rotateY },
+              { rotateX: this.props.rotateX },
               { translate: this.props.content.translate },
             ],
+            // Make ring, using rounded borders, which appears on hover.
+            backgroundColor: this.props.ringColor,
+            borderColor: this.props.ringColor,
+            borderRadius: 0.4 / 2,
+            borderWidth: 0.045,
+            height: 0.4,
+            justifyContent: 'center',
+            width: 0.4,
           }}
           onInput={this.props.onInput}
           onExit={this._fadeOut}
@@ -81,7 +81,6 @@ const Hovertip = (WrappedComponent, onlySound = false) =>
         >
           <Image
             style={{
-              borderRadius: 50,
               height: 0.3,
               width: 0.3,
               flexDirection: 'row',

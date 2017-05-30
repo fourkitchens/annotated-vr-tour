@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Image, View } from 'react-vr';
 import Hovertip from './lib/Hovertip';
+import Movable from './lib/Movable';
 
 export const Picture = ({ content, settings }) => (
   <View
@@ -33,4 +34,4 @@ export const Picture = ({ content, settings }) => (
   </View>
 );
 
-export default Hovertip(Picture);
+export default Movable(Hovertip(Picture));

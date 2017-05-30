@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Image, View } from 'react-vr';
 import Hovertip from './lib/Hovertip';
+import Movable from './lib/Movable';
 
 export const PanelImage = ({ content, settings }) => (
   <View
@@ -72,4 +73,4 @@ export const PanelImage = ({ content, settings }) => (
   </View>
 );
 
-export default Hovertip(PanelImage);
+export default Movable(Hovertip(PanelImage));

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-vr';
 import Hovertip from './lib/Hovertip';
+import Movable from './lib/Movable';
 
 export const Textblock = ({ content, settings }) => (
   <View
@@ -43,4 +44,4 @@ export const Textblock = ({ content, settings }) => (
   </View>
 );
 
-export default Hovertip(Textblock);
+export default Movable(Hovertip(Textblock));

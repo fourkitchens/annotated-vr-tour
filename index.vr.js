@@ -1,7 +1,16 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { AppRegistry, asset, Image, Pano, Text, Sound, View } from 'react-vr';
+import {
+  AppRegistry,
+  asset,
+  Image,
+  Pano,
+  Text,
+  Sound,
+  View,
+  VrHeadModel,
+} from 'react-vr';
 const Linking = require('Linking');
 
 import _ from 'lodash';
@@ -37,6 +46,7 @@ class App extends Component {
     data: null,
     locationId: null,
     rotation: null,
+    dragState: '',
   };
 
   componentDidMount() {
@@ -49,7 +59,7 @@ class App extends Component {
       .then(this.init)
       .then(() => {
         if (config.previewMode) {
-          setInterval(this.getInitialData, 3000);
+          setInterval(() => this.getInitialData().then(this.init), 3000);
         }
       });
   }
@@ -77,7 +87,7 @@ class App extends Component {
   };
 
   normalizeExperience = data => {
-    const experience = data.data[0];
+    const [experience] = data.data;
     const onEnter = relate.getRelationship(
       data,
       experience,
@@ -115,7 +125,7 @@ class App extends Component {
       nav_icon: `${config.baseUrl}${navButtonIcon.attributes.url}`,
       info_icon: `${config.baseUrl}${infoButtonIcon.attributes.url}`,
       firstPhotoId,
-      firstPhotoRotation: 150,
+      firstPhotoRotation: 0,
       soundEffects: {
         navButton: {
           onEnter: {
@@ -204,10 +214,19 @@ class App extends Component {
     this.setState({
       data: tourConfig,
       locationId: tourConfig.firstPhotoId,
-      rotation: tourConfig.firstPhotoRotation +
-        (tourConfig.photos[tourConfig.firstPhotoId].rotationOffset || 0),
+      rotation: tourConfig.photos[tourConfig.firstPhotoId].rotationOffset || 0,
     });
   };
+
+  saveLocation(id, x, y) {
+    waterwheel.jsonapi.patch(`node/component/${id}`, {
+      id,
+      attributes: {
+        field_rotation: y,
+        field_rotation_x: x,
+      },
+    });
+  }
 
   render() {
     if (!this.state.data) {
@@ -249,7 +268,31 @@ class App extends Component {
                     >
                       <LoadingSpinner />
                     </View>}
-                  <View style={{ transform: [{ rotateY: rotation }] }}>
+                  <View
+                    style={{ transform: [{ rotateY: rotation }] }}
+                    onInput={e => {
+                      if (e.nativeEvent.inputEvent.type === 'MouseInputEvent') {
+                        if (
+                          e.nativeEvent.inputEvent.eventType === 'mousedown'
+                        ) {
+                          this.setState(() => ({ dragState: 'latch' }));
+                        }
+                        if (
+                          this.state.dragState !== 'unlatch' &&
+                          (e.nativeEvent.inputEvent.eventType === 'mouseup' ||
+                            e.nativeEvent.inputEvent.eventType === 'mouseleave')
+                        ) {
+                          this.setState(() => ({ dragState: 'unlatch' }));
+                        }
+                        if (
+                          this.state.dragState === 'latch' &&
+                          e.nativeEvent.inputEvent.eventType === 'mousemove'
+                        ) {
+                          this.setState(() => ({ dragState: 'dragging' }));
+                        }
+                      }
+                    }}
+                  >
                     {ambient &&
                       <Sound
                         source={{ uri: ambient.uri }}
@@ -258,10 +301,6 @@ class App extends Component {
                         volume={ambient.volume}
                       />}
                     <Pano
-                      style={{
-                        position: 'absolute',
-                        backgroundColor: isLoading ? 'grey' : 'white',
-                      }}
                       onLoad={() => {
                         this.setState({
                           locationId: params.id,
@@ -301,6 +340,9 @@ class App extends Component {
                             rotateY={tooltip.rotationY}
                             source={{ uri: this.state.data.info_icon }}
                             content={tooltip}
+                            dragging={this.state.dragState === 'dragging'}
+                            persist={this.saveLocation}
+                            enabled={!this.placing}
                           />
                         );
                       })}
