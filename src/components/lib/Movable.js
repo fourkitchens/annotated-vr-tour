@@ -11,8 +11,7 @@ import { Animated, View, VrButton, VrHeadModel } from 'react-vr';
 const Movable = WrappedComponent =>
   class extends Component {
     static defaultProps = {
-      pickupDelay: 1000,
-      dropDelay: 500,
+      pickupDelay: 500,
       dragging: false,
       enabled: true,
     };
