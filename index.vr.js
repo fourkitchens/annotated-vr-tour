@@ -68,7 +68,6 @@ class App extends Component {
     return waterwheel.jsonapi
       .get('node/experience', {
         include: [
-          'field_ambient',
           'field_button_onclick_sound',
           'field_button_onenter_sound',
           'field_ambient',
@@ -141,7 +140,8 @@ class App extends Component {
           },
         },
         ambient: {
-          uri: `${config.baseUrl}${ambientSound.attributes.url}`,
+          enabled: _.has(ambientSound, 'attributes.url'),
+          uri: `${config.baseUrl}${_.get(ambientSound, 'attributes.url')}`,
           loop: true,
           volume: 0.50,
         },
@@ -293,7 +293,7 @@ class App extends Component {
                       }
                     }}
                   >
-                    {ambient &&
+                    {ambient.enabled &&
                       <Sound
                         source={{ uri: ambient.uri }}
                         autoPlay={true}
