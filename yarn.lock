@@ -5109,9 +5109,9 @@ watch@~0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/watch/-/watch-0.10.0.tgz#77798b2da0f9910d595f1ace5b0c2258521f21dc"
 
-waterwheel@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/waterwheel/-/waterwheel-1.3.1.tgz#8674e26a8f1d3bce0489e4519530fd2d1df802b4"
+waterwheel@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/waterwheel/-/waterwheel-1.3.2.tgz#e552974ed20ee4093908e2686b4d18289cf04911"
   dependencies:
     axios "0.13.1"
     qs "6.2.1"

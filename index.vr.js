@@ -218,15 +218,18 @@ class App extends Component {
     });
   };
 
-  saveLocation(id, x, y) {
-    waterwheel.jsonapi.patch(`node/component/${id}`, {
-      id,
-      attributes: {
-        field_rotation: y,
-        field_rotation_x: x,
+  saveLocation = (id, x, y) => {
+    const payload = {
+      data: {
+        id,
+        attributes: {
+          field_rotation: y,
+          field_rotation_x: x,
+        },
       },
-    });
-  }
+    };
+    return waterwheel.jsonapi.patch(`node/component/${id}`, payload);
+  };
 
   render() {
     if (!this.state.data) {

@@ -44,7 +44,7 @@ const Movable = WrappedComponent =>
         this.setState(prevState => ({ pickedUp: false }));
         clearTimeout(this.pickupTimeoutId);
         // Save new location
-        this.props.persist(
+        return this.props.persist(
           this.props.content.id,
           this.state.rotateX,
           this.state.rotateY
