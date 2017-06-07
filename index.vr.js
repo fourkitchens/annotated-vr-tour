@@ -191,6 +191,7 @@ class App extends Component {
               width: 2,
               height: 2,
               rotationY: component.attributes.field_rotation || 0,
+              rotationX: component.attributes.field_rotation_x || 0,
               translate: [
                 component.attributes.field_x || 0,
                 component.attributes.field_y || 0,
@@ -328,6 +329,7 @@ class App extends Component {
                               history={history}
                               translate={tooltip.translate}
                               rotateY={tooltip.rotationY}
+                              rotateX={tooltip.rotationX}
                               source={{ uri: this.state.data.nav_icon }}
                               textLabel={tooltip.title}
                             />
@@ -341,6 +343,7 @@ class App extends Component {
                               uri: soundEffects.infoButton.onEnter.uri,
                             }}
                             rotateY={tooltip.rotationY}
+                            rotateX={tooltip.rotationX}
                             source={{ uri: this.state.data.info_icon }}
                             content={tooltip}
                             dragging={this.state.dragState === 'dragging'}

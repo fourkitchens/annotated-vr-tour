@@ -11,7 +11,7 @@ import { Animated, View, VrButton, VrHeadModel } from 'react-vr';
 const Movable = WrappedComponent =>
   class extends Component {
     static defaultProps = {
-      pickupDelay: 500,
+      pickupDelay: 400,
       dragging: false,
       enabled: true,
     };
@@ -19,7 +19,7 @@ const Movable = WrappedComponent =>
     state = {
       pickedUp: false,
       rotateY: this.props.rotateY,
-      rotateZ: 0,
+      rotateX: this.props.rotateX,
     };
 
     componentWillReceiveProps(nextProp) {
@@ -33,13 +33,11 @@ const Movable = WrappedComponent =>
     }
 
     pickup = () => {
-      console.log('picked up thing');
       this.setState(prevState => ({ pickedUp: true }));
     };
 
     drop = () => {
       if (this.state.pickedUp) {
-        console.log('dropped thing');
         clearTimeout(this.dropTimeoutId);
         this.setState(prevState => ({ pickedUp: false }));
         clearTimeout(this.pickupTimeoutId);
@@ -54,7 +52,6 @@ const Movable = WrappedComponent =>
 
     startPickUp = () => {
       if (!this.state.pickedUp) {
-        console.log('start pickup');
         this.pickupTimeoutId = setTimeout(() => {
           this.pickup();
         }, this.props.pickupDelay);
@@ -63,7 +60,6 @@ const Movable = WrappedComponent =>
 
     stopPickup = () => {
       if (!this.state.pickedUp) {
-        console.log('stopped pickup');
         clearTimeout(this.pickupTimeoutId);
       }
     };
