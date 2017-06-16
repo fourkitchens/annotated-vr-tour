@@ -4,10 +4,19 @@
 ![Editing Demonstration](https://thumbs.gfycat.com/BlushingScaryElk-size_restricted.gif)
 
 ## Setup
-Currently, this repo depends on the `master` branch of react-vr. Here's what you need to do to develop/deploy this repo locally:
 
 ### Development
 * Clone this repository
+* `yarn`
+* `yarn start`
+
+### Deployment
+* Complete above steps 👆🏻
+* `yarn run deploy`
+
+## Updating react-vr
+NOTE: Currently, this repo depends on the `master` branch of react-vr. This is a temporary need and only necessary if you need to get the latest react-vr code from `master` due to a merged PR or the like. Until they release again, here's what you need to do to get the latest from react-vr `master`:
+
 * Clone [react-vr](https://github.com/facebook/react-vr)
 * `cd` into the react-vr directory
 * `yarn`
@@ -17,13 +26,7 @@ Currently, this repo depends on the `master` branch of react-vr. Here's what you
 `node scripts/build-packages.js`
 * You should see
 `Built all packages! They are located at /Users/{your/dev/path}/react-vr/package_builds`
-* `cd` to your clone of this repository
-* `yarn`
-* `yarn start`
-
-### Deployment
-* Complete above steps 👆🏻
-* `yarn run deploy`
+* Copy the resulting packges into `./package_builds` in your project repo.
 
 ## Editing
 To edit the location of components:
