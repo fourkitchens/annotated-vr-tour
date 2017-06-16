@@ -8,7 +8,7 @@ import { VRInstance } from 'react-vr-web';
 
 function init(bundle, parent, options) {
   const vr = new VRInstance(bundle, 'AnnotatedVRTour', parent, {
-    // raycasters: [SimpleRaycaster],
+    raycasters: [SimpleRaycaster],
     // Add custom options here
     cursorVisibility: 'visible',
     ...options,
