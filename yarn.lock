@@ -3287,13 +3287,13 @@ mime-db@~1.23.0:
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.23.0.tgz#a31b4070adaea27d732ea333740a64d0ec9a6659"
 
-mime-types@2.1.11, mime-types@~2.1.7, mime-types@~2.1.9:
+mime-types@2.1.11, mime-types@~2.1.7:
   version "2.1.11"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.11.tgz#c259c471bda808a85d6cd193b430a5fae4473b3c"
   dependencies:
     mime-db "~1.23.0"
 
-mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.11, mime-types@~2.1.15, mime-types@~2.1.6:
+mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.11, mime-types@~2.1.15, mime-types@~2.1.6, mime-types@~2.1.9:
   version "2.1.15"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.15.tgz#a4ebf5064094569237b8cf70046776d09fc92aed"
   dependencies:
@@ -3690,9 +3690,9 @@ osenv@^0.1.0, osenv@^0.1.4:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
 
-ovrui@../react-vr/package_builds/ovrui-b4bef87c.tgz, ovrui@~1.0.0:
+ovrui@./package_builds/ovrui-b4bef87c.tgz, ovrui@~1.0.0:
   version "1.0.0"
-  resolved "../react-vr/package_builds/ovrui-b4bef87c.tgz#c9e70a610e776e8ebd73514764327a4f1251c607"
+  resolved "./package_builds/ovrui-b4bef87c.tgz#c9e70a610e776e8ebd73514764327a4f1251c607"
   dependencies:
     three "^0.80.1"
 
@@ -3891,8 +3891,8 @@ progress-stream@^1.1.0:
     through2 "~0.2.3"
 
 promise@^7.1.1:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/promise/-/promise-7.2.0.tgz#67075a5fc537b39d66b87cdeb3732cf75867dbe2"
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/promise/-/promise-7.3.0.tgz#e7feec5aa87a2cbb81acf47d9a3adbd9d4642d7b"
   dependencies:
     asap "~2.0.3"
 
@@ -4106,16 +4106,16 @@ react-transform-hmr@^1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
-react-vr-web@../react-vr/package_builds/react-vr-web-b4bef87c.tgz:
+react-vr-web@./package_builds/react-vr-web-b4bef87c.tgz:
   version "1.0.0"
-  resolved "../react-vr/package_builds/react-vr-web-b4bef87c.tgz#fe81424cb417884ed0c72f40bb671ff4113e4589"
+  resolved "./package_builds/react-vr-web-b4bef87c.tgz#fe81424cb417884ed0c72f40bb671ff4113e4589"
   dependencies:
     ovrui "~1.0.0"
     three-gltf2-loader "^1.0.0"
 
-react-vr@../react-vr/package_builds/react-vr-b4bef87c.tgz:
+react-vr@./package_builds/react-vr-b4bef87c.tgz:
   version "1.1.0"
-  resolved "../react-vr/package_builds/react-vr-b4bef87c.tgz#fdc237bb87f51ecf253a535e8d23863819a298c6"
+  resolved "./package_builds/react-vr-b4bef87c.tgz#fdc237bb87f51ecf253a535e8d23863819a298c6"
   dependencies:
     create-react-class "^15.5.3"
     prop-types "^15.5.10"
@@ -5097,8 +5097,8 @@ utils-merge@1.0.0:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.0.tgz#0294fb922bb9375153541c4f7096231f287c8af8"
 
 uuid@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
