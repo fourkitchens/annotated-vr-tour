@@ -45,6 +45,8 @@ class App extends Component {
       .then(url => {
         this.initialSceneSlug = qs.parse(url.split('?')[1]).scene;
         this.placing = Boolean(qs.parse(url.split('?')[1]).placing) || false;
+        config.previewMode =
+          Boolean(qs.parse(url.split('?')[1]).preview) || false;
       })
       .then(this.getInitialData)
       .then(this.init)
