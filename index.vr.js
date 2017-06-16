@@ -74,6 +74,7 @@ class App extends Component {
           'field_scenes',
           'field_initial_scene',
           'field_info_button',
+          'field_sound_button_icon',
           'field_navigation_button',
           'field_scenes.field_components',
           'field_scenes.field_components.field_scene_link',
@@ -117,12 +118,18 @@ class App extends Component {
       experience,
       'field_info_button'
     );
+    const soundButtonIcon = relate.getRelationship(
+      data,
+      experience,
+      'field_sound_button_icon'
+    );
     const scenes = relate.getRelationship(data, experience, 'field_scenes');
     const firstPhotoId =
       this.initialSceneSlug || initialScene.attributes.field_slug;
     return {
       nav_icon: `${config.baseUrl}${navButtonIcon.attributes.url}`,
       info_icon: `${config.baseUrl}${infoButtonIcon.attributes.url}`,
+      sound_icon: `${config.baseUrl}${soundButtonIcon.attributes.url}`,
       firstPhotoId,
       firstPhotoRotation: 0,
       soundEffects: {
@@ -347,11 +354,17 @@ class App extends Component {
                           <Hovertip
                             key={tooltip.id}
                             onEnterSound={{
-                              uri: soundEffects.infoButton.onEnter.uri,
+                              uri: tooltip.type === 'sound' && !this.placing
+                                ? tooltip.sound
+                                : soundEffects.infoButton.onEnter.uri,
                             }}
                             rotateY={tooltip.rotationY}
                             rotateX={tooltip.rotationX}
-                            source={{ uri: this.state.data.info_icon }}
+                            source={{
+                              uri: tooltip.type === 'sound'
+                                ? this.state.data.sound_icon
+                                : this.state.data.info_icon,
+                            }}
                             content={tooltip}
                             dragging={this.state.dragState === 'dragging'}
                             persist={this.saveLocation}
