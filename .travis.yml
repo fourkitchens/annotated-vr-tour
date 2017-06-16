@@ -7,9 +7,11 @@ branches:
     - /^v\d/
 after_success:
 - yarn run semantic-release
+before_deploy: yarn run predeploy
 deploy:
-  provider: script
-  script: yarn run deploy
+  local_dir: vr/build
+  provider: pages
   skip_cleanup: true
+  github_token: $GH_TOKEN
   on:
     branch: master

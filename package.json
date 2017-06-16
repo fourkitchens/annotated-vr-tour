@@ -12,7 +12,7 @@
     "precommit": "lint-staged",
     "semantic-release": "semantic-release pre && semantic-release post",
     "commitmsg": "validate-commit-msg",
-    "deploy": "gh-pages --repo git@github.com:fourkitchens/annotated-vr-tour.git -d vr/build"
+    "deploy": "gh-pages -d vr/build"
   },
   "lint-staged": {
     "*.js": [
