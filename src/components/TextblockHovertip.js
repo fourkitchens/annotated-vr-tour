@@ -7,15 +7,17 @@ export const Textblock = ({ content, settings }) => (
   <View
     style={{
       backgroundColor: '#127218',
-      padding: 0.1,
+      width: content.width,
+      height: content.height,
+      padding: 0.2,
       transform: [{ rotateX: content.translate[1] * settings.rotateXFactor }],
+      layoutOrigin: [0.4, 0],
     }}
   >
     <Text
       style={{
         color: 'white',
         fontSize: settings.fontSize.title,
-        width: content.width,
         textAlignVertical: 'bottom',
         marginBottom: settings.margin,
       }}
@@ -26,7 +28,6 @@ export const Textblock = ({ content, settings }) => (
       style={{
         color: 'white',
         fontSize: settings.fontSize.text,
-        width: content.width,
       }}
     >
       {content.text}
