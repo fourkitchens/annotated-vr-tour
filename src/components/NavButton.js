@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import { Animated, Image, Text, View, VrButton } from 'react-vr';
 
 import LoadingSpinner from './LoadingSpinner';
+import Movable from './lib/Movable';
 
 const Easing = require('Easing');
 const VrSoundEffects = require('VrSoundEffects');
@@ -28,16 +29,15 @@ const VrSoundEffects = require('VrSoundEffects');
  * On hover, a text label appears, and a fill-circle exapnds around the button.
  * Once selected, the button disappears and a loading spinner takes its place.
  */
-export default class NavButton extends React.Component {
+export const NavButton = class extends React.Component {
   static defaultProps = {
     delay: 2000,
-    height: 0.3,
     innerWidth: 0.3,
     isLoading: false,
     outerWidth: 0.5,
     onInput: null,
     rotateY: 0,
-    scaleFactor: 1.3,
+    rotateX: 0,
     textLabel: '',
     translate: [0, 0, -3],
   };
@@ -79,9 +79,11 @@ export default class NavButton extends React.Component {
   }
 
   _selected() {
-    // Disable focus once button is selected.
-    this.setState({ hasFocus: false });
-    this.props.history.push(this.props.to);
+    if (this.props.enabled) {
+      // Disable focus once button is selected.
+      this.setState({ hasFocus: false });
+      this.props.history.push(this.props.to);
+    }
   }
 
   render() {
@@ -98,12 +100,13 @@ export default class NavButton extends React.Component {
           position: 'absolute',
           transform: [
             { rotateY: this.props.rotateY },
+            { rotateX: this.props.rotateX },
             { translate: this.props.translate },
           ],
         }}
         onClick={() => this._selected()}
         onEnter={() => {
-          if (!this.props.isLoading) {
+          if (!this.props.isLoading && this.props.enabled) {
             this.setState({ hasFocus: true });
             // Remember id, so we can remove this timeout if cusor exits.
             const id = setTimeout(() => {
@@ -116,10 +119,12 @@ export default class NavButton extends React.Component {
           }
         }}
         onExit={() => {
-          this.setState({ hasFocus: false });
-          clearTimeout(this.state.lastTimeoutId);
-          this.state.lastTimeoutId = 0;
-          this._removeFill();
+          if (this.props.enabled) {
+            this.setState({ hasFocus: false });
+            clearTimeout(this.state.lastTimeoutId);
+            this.state.lastTimeoutId = 0;
+            this._removeFill();
+          }
         }}
         onClickSound={this.props.onClickSound}
         onEnterSound={this.props.onEnterSound}
@@ -145,7 +150,7 @@ export default class NavButton extends React.Component {
                   // rounded, trasparent boarder shrink and white circle grown.
                   backgroundColor: this.state.hasFocus
                     ? fillColor
-                    : transparent,
+                    : this.props.enabled ? transparent : this.props.ringColor,
                   borderColor: transparent,
                   borderRadius: this.props.outerWidth / 2,
                   borderWidth: this.state.borderWidthAnim,
@@ -170,6 +175,7 @@ export default class NavButton extends React.Component {
           <Text
             style={{
               backgroundColor: 'black',
+              position: 'relative',
               color: 'white',
               fontSize: this.props.height * 0.7,
               height: this.props.height,
@@ -181,9 +187,11 @@ export default class NavButton extends React.Component {
               textAlignVertical: 'auto',
             }}
           >
-            {this.props.textLabel}
+            {this.props.content.title}
           </Text>}
       </VrButton>
     );
   }
-}
+};
+
+export default Movable(NavButton);

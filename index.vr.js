@@ -59,7 +59,7 @@ class App extends Component {
       .then(this.init)
       .then(() => {
         if (config.previewMode) {
-          setInterval(() => this.getInitialData().then(this.init), 3000);
+          setInterval(() => this.getInitialData().then(this.init), 6000);
         }
       });
   }
@@ -143,7 +143,7 @@ class App extends Component {
           enabled: _.has(ambientSound, 'attributes.url'),
           uri: `${config.baseUrl}${_.get(ambientSound, 'attributes.url')}`,
           loop: true,
-          volume: 0.50,
+          volume: 0.5,
         },
       },
       photos: scenes.reduce((acc, scene) => {
@@ -215,7 +215,11 @@ class App extends Component {
     this.setState({
       data: tourConfig,
       locationId: tourConfig.firstPhotoId,
-      rotation: tourConfig.photos[tourConfig.firstPhotoId].rotationOffset || 0,
+      rotation: _.get(
+        tourConfig,
+        `photos[${tourConfig.firstPhotoId}].rotationOffset`,
+        0
+      ),
     });
   };
 
@@ -331,7 +335,10 @@ class App extends Component {
                               rotateY={tooltip.rotationY}
                               rotateX={tooltip.rotationX}
                               source={{ uri: this.state.data.nav_icon }}
-                              textLabel={tooltip.title}
+                              content={tooltip}
+                              enabled={!this.placing}
+                              dragging={this.state.dragState === 'dragging'}
+                              persist={this.saveLocation}
                             />
                           );
                         }

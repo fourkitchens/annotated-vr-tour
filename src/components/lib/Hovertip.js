@@ -14,6 +14,8 @@ const Hovertip = (WrappedComponent, onlySound = false) =>
       fadeIn: 500,
       fadeOut: 500,
       height: 0.3,
+      innerWidth: 0.3,
+      outerWidth: 0.5,
       onInput: null,
       rotateY: 0,
       rotateX: 0,
@@ -64,12 +66,11 @@ const Hovertip = (WrappedComponent, onlySound = false) =>
             ],
             // Make ring, using rounded borders, which appears on hover.
             backgroundColor: this.props.ringColor,
-            borderColor: this.props.ringColor,
-            borderRadius: 0.4 / 2,
-            borderWidth: 0.045,
-            height: 0.4,
+            borderRadius: this.props.outerWidth / 2,
+            height: this.props.outerWidth,
+            alignItems: 'center',
             justifyContent: 'center',
-            width: 0.4,
+            width: this.props.outerWidth,
           }}
           onInput={this.props.onInput}
           onExit={this._fadeOut}

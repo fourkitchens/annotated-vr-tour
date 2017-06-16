@@ -42,11 +42,13 @@ const Movable = WrappedComponent =>
         this.setState(prevState => ({ pickedUp: false }));
         clearTimeout(this.pickupTimeoutId);
         // Save new location
-        return this.props.persist(
-          this.props.content.id,
-          this.state.rotateX,
-          this.state.rotateY
-        );
+        if (this.props.persist) {
+          return this.props.persist(
+            this.props.content.id,
+            this.state.rotateX,
+            this.state.rotateY
+          );
+        }
       }
     };
 
@@ -83,6 +85,9 @@ const Movable = WrappedComponent =>
             onButtonRelease={this.stopPickup}
             onClick={this.drop}
             ignoreLongClick={true}
+            style={{
+              layoutOrigin: [0.5, 0.5],
+            }}
           >
             {wrappedComponent}
           </VrButton>;
