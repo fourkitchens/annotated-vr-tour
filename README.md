@@ -11,8 +11,7 @@
 * `yarn start`
 
 ### Deployment
-* Complete above steps 👆🏻
-* `yarn run deploy`
+Deployment occurs on any commit to master
 
 ## Updating react-vr
 NOTE: Currently, this repo depends on the `master` branch of react-vr. This is a temporary need and only necessary if you need to get the latest react-vr code from `master` due to a merged PR or the like. Until they release again, here's what you need to do to get the latest from react-vr `master`:
