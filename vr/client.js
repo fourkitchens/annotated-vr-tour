@@ -4,7 +4,7 @@
 
 // Auto-generated content.
 import { VRInstance } from 'react-vr-web';
-// import * as SimpleRaycaster from 'simple-raycaster';
+import * as SimpleRaycaster from 'simple-raycaster';
 
 function init(bundle, parent, options) {
   const vr = new VRInstance(bundle, 'AnnotatedVRTour', parent, {
