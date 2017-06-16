@@ -1,16 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  asset,
-  Image,
-  Pano,
-  Text,
-  Sound,
-  View,
-  VrHeadModel,
-} from 'react-vr';
+import { AppRegistry, asset, Image, Pano, Text, Sound, View } from 'react-vr';
 const Linking = require('Linking');
 
 import _ from 'lodash';

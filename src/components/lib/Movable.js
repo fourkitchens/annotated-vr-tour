@@ -3,6 +3,9 @@
 import React, { Component } from 'react';
 import { Animated, View, VrButton, VrHeadModel } from 'react-vr';
 
+// @TODO This should not be needed. Investigate new VrHeadModel API.
+const X_ROTATION_ADUSTMENT = 60;
+
 /**
  * On enter the Hovertip fades in the WrappedComponent, and then fades it out
  * when the cursor leaves both the Tooltip and the WrappedComponent. If there is
@@ -27,7 +30,7 @@ const Movable = WrappedComponent =>
         const rotation = VrHeadModel.rotationOfHeadMatrix();
         this.setState(() => ({
           rotateY: rotation[1] * 180 / Math.PI,
-          rotateX: rotation[0] * 180 / Math.PI,
+          rotateX: rotation[0] * 180 / Math.PI + X_ROTATION_ADUSTMENT,
         }));
       }
     }

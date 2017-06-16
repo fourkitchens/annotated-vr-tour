@@ -127,7 +127,7 @@ export const NavButton = class extends React.Component {
             this._removeFill();
           }
         }}
-        onClickSound={this.props.onClickSound}
+        onClickSound={this.props.enabled ? this.props.onClickSound : null}
         onEnterSound={this.props.onEnterSound}
       >
         <View
