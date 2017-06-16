@@ -4,3 +4,4 @@ node_js: 6
 install: yarn
 after_success:
 - yarn run semantic-release
+- yarn run deploy
