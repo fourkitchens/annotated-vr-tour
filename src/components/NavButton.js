@@ -32,6 +32,7 @@ const VrSoundEffects = require('VrSoundEffects');
 export const NavButton = class extends React.Component {
   static defaultProps = {
     delay: 2000,
+    height: 0.3,
     innerWidth: 0.3,
     isLoading: false,
     outerWidth: 0.5,
