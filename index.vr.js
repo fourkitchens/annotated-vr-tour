@@ -37,6 +37,10 @@ class App extends Component {
     data: null,
     locationId: null,
     rotation: null,
+    raycasterPosition: {
+      viewportX: null,
+      viewportY: null,
+    },
     dragState: '',
   };
 
@@ -283,20 +287,14 @@ class App extends Component {
                         if (
                           e.nativeEvent.inputEvent.eventType === 'mousedown'
                         ) {
-                          this.setState(() => ({ dragState: 'latch' }));
-                        }
-                        if (
-                          this.state.dragState !== 'unlatch' &&
-                          (e.nativeEvent.inputEvent.eventType === 'mouseup' ||
-                            e.nativeEvent.inputEvent.eventType === 'mouseleave')
-                        ) {
-                          this.setState(() => ({ dragState: 'unlatch' }));
-                        }
-                        if (
-                          this.state.dragState === 'latch' &&
-                          e.nativeEvent.inputEvent.eventType === 'mousemove'
-                        ) {
-                          this.setState(() => ({ dragState: 'dragging' }));
+                          e.persist();
+                          this.setState(() => ({
+                            dragState: 'latch',
+                            raycasterPosition: {
+                              viewportX: e.nativeEvent.inputEvent.viewportX,
+                              viewportY: e.nativeEvent.inputEvent.viewportY,
+                            },
+                          }));
                         }
                       }
                     }}
@@ -337,7 +335,8 @@ class App extends Component {
                               source={{ uri: this.state.data.nav_icon }}
                               content={tooltip}
                               enabled={!this.placing}
-                              dragging={this.state.dragState === 'dragging'}
+                              dragging={this.state.dragState === 'latch'}
+                              raycasterPosition={this.state.raycasterPosition}
                               persist={this.saveLocation}
                             />
                           );
@@ -359,7 +358,8 @@ class App extends Component {
                                 : this.state.data.info_icon,
                             }}
                             content={tooltip}
-                            dragging={this.state.dragState === 'dragging'}
+                            dragging={this.state.dragState === 'latch'}
+                            raycasterPosition={this.state.raycasterPosition}
                             persist={this.saveLocation}
                             enabled={!this.placing}
                           />

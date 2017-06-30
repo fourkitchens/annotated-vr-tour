@@ -28,9 +28,15 @@ const Movable = WrappedComponent =>
     componentWillReceiveProps(nextProp) {
       if (this.props.dragging && this.state.pickedUp) {
         const rotation = VrHeadModel.rotationOfHeadMatrix();
+        const fovH = VrHeadModel.horizontalFov();
+        const fovY = VrHeadModel.verticalFov();
         this.setState(() => ({
-          rotateY: rotation[1] * 180 / Math.PI,
-          rotateX: rotation[0] * 180 / Math.PI,
+          rotateY:
+            rotation[1] * 180 / Math.PI +
+              fovH * nextProp.raycasterPosition.viewportY,
+          rotateX:
+            rotation[0] * 180 / Math.PI +
+              fovY * nextProp.raycasterPosition.viewportX,
         }));
       }
     }
